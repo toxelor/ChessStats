@@ -7,6 +7,7 @@ const lichessHost = 'https://lichess.org';
 const scopes = ['email:read'];
 const clientId = 'example.com';
 const clientUrl = 'http://localhost:3000/'
+const newsApi = 'f24598fe5d484f5ba1c668f04a7c7796'
 
 const oauth = new OAuth2AuthCodePKCE({
   authorizationUrl: `${lichessHost}/oauth`,
@@ -19,13 +20,7 @@ const oauth = new OAuth2AuthCodePKCE({
 });
 
 function App() {
-  
-
-  
-}
-
-const Stats = () => {
-const tokenReducer = (state, action) => {
+  const tokenReducer = (state, action) => {
     switch (action.type){
       case 'TOKEN_FETCH_INIT':
         return{
@@ -119,6 +114,124 @@ const tokenReducer = (state, action) => {
     document.location.reload()
   }
 
+  //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  const [currentButton, setCurrentButton] = React.useState('news')
+
+  const handleActive = (activate) => {
+    const buttons = document.getElementsByClassName('slider')
+    if (activate === 'news') {
+      buttons[0].classList.add('selected')
+      buttons[1].classList.remove('selected')
+      handleStories()
+    }
+    else {
+      buttons[1].classList.add('selected')
+      buttons[0].classList.remove('selected')
+    }
+  }
+
+const makeActive = (activate) => {
+  setCurrentButton(activate)
+  handleActive(activate)
+}
+
+React.useEffect(() => {
+  handleActive(currentButton)
+}, [currentButton])
+
+const storiesReducer = (state, action) => {
+  switch(action.type){
+    case 'STORIES_INIT':
+      return {
+      ...state,
+      isLoading: true
+    }
+    case 'STORIES_SUCCESS':
+      return {
+      ...state,
+      isLoading: false,
+      stories: action.payload.stories
+    }
+    default: throw new Error()
+  }
+}
+
+const [stories, dispatchStories] = React.useReducer(
+  storiesReducer,
+  { stories: '', isLoading: false }
+)
+
+const handleStories = async () => {
+  dispatchStories({ type: 'STORIES_INIT' })
+  const res = await axios.get(`https://newsapi.org/v2/everything?q=chess&pageSize=10&sortBy=popularity&language=ru&apiKey=${newsApi}`)
+  console.log(res.data)
+  dispatchStories({
+    type: 'STORIES_SUCCESS',
+    payload: {
+      stories: res.data
+    }
+    
+  })
+
+}
+
+  return (
+    <div className='App'>
+      <div className='nav-bar'>
+      {accountInfo === '' 
+      ? (<button className='button' onClick={auth}>
+            {token.isLoading ? ('Загрузка...'): ('Войти')}
+        </button>) 
+      : (
+        <a href={accountInfo.url} target='_blank' rel="noreferrer" style={{textDecoration: 'none'}}>
+          <p className='text'>{accountInfo.username}</p>
+        </a>
+      
+      )}
+        
+        {
+          accountInfo === ''
+          ? (<span></span>)
+          : (<button className='button' onClick={logout}>
+              Выйти
+          </button>)
+        }
+      </div>
+      <div className='navigation'>
+        <button className='slider' onClick={() => makeActive('news')}>
+          Новости
+        </button>
+
+        <button className='slider' onClick={() => makeActive('account')}>
+          Аккаунт
+        </button>
+      </div>
+      {
+        currentButton === 'news'
+        ? (<><p>новости)</p></>)
+        : (
+          accountInfo === ''
+          ? (<div style={{width: '96%', height: '80vh', padding: '20px 30px', paddingRight:'60px'}}>
+          <div style={{display: 'flex', alignItems: 'center', width: '100%', height: '100%', justifyContent: 'center', flexDirection: 'column', background: 'rgba(128, 128, 128, 0.115)'}}>
+          <p className='text' style={{textAlign: 'center'}}>Чтобы увидеть информацию об аккаунте, войдите в него</p>
+        </div>
+        </div>)
+          : (
+            <Account accountInfo={accountInfo} token={token} />
+          )
+        )
+
+        
+      }
+    </div>
+    
+  );
+
+  
+}
+
+const Account = ({accountInfo, token}) => {
   const [games, setGames] = React.useState({})
 
   const [isLoading, setIsLoading] = React.useState(false)
@@ -204,43 +317,8 @@ const tokenReducer = (state, action) => {
       .catch(onError)
     
   }
-
   return (
-    <div className='App'>
-      <div className='nav-bar'>
-      {accountInfo === '' 
-      ? (<button className='button' onClick={auth}>
-            {token.isLoading ? ('Загрузка...'): ('Войти')}
-        </button>) 
-      : (
-        <a href={accountInfo.url} target='_blank' rel="noreferrer" style={{textDecoration: 'none'}}>
-          <p className='text'>{accountInfo.username}</p>
-        </a>
-      
-      )}
-        
-        {
-          accountInfo === ''
-          ? (<span></span>)
-          : (<button className='button' onClick={logout}>
-              Выйти
-          </button>)
-        }
-      </div>
-      <div className='navigation'>
-        <button className='slider'>
-          Новости
-        </button>
-
-        <button className='slider'>
-          Аккаунт
-        </button>
-      </div>
-      {
-        accountInfo === ''
-        ? (<></>)
-        : (
-          <div className='container'>
+  <div className='container'>
             <div className='left-bar'>
               <span className='text'>
                 Игр: {<span style={{color: 'green'}}>{accountInfo.count.win}</span>}/
@@ -326,11 +404,10 @@ const tokenReducer = (state, action) => {
               
             </div>
           </div>
-        )
-      }
-    </div>
-    
-  );
+  )
 }
+
+
+
 
 export default App;

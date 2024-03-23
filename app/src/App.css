@@ -1,5 +1,10 @@
+html{
+  overflow: hidden; 
+}
+
 .App {
-  min-height: 60vw; 
+  min-height: 100vh; 
+  min-width: 100vw;
   height: auto; 
   background: linear-gradient(to right, #ffba609e, #ead2b2);
   background-repeat: repeat;
@@ -55,6 +60,11 @@
 }
 
 .slider:hover {
+  background-color: #00000019;
+  box-shadow: 0 2px 0px orange;
+}
+
+.selected {
   background-color: #17121208;
   box-shadow: 0 2px 0px orange;
 }

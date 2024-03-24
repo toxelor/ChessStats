@@ -1,6 +1,4 @@
-html{
-  overflow: hidden; 
-}
+
 
 .App {
   min-height: 100vh; 
@@ -136,3 +134,15 @@ html{
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.159);
   transform: translate(-1px, -1px);
 }
+
+
+.news-cont{
+  margin: 10px 32px;
+  margin-bottom: 100px;
+  height: 75vh;
+  padding: 20px 50px;
+  background-color: rgba(128, 128, 128, 0.115);
+  flex-direction: column;
+  overflow-y: scroll;
+}
+

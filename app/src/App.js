@@ -118,27 +118,14 @@ function App() {
 
   const [currentButton, setCurrentButton] = React.useState('news')
 
-  const handleActive = (activate) => {
-    const buttons = document.getElementsByClassName('slider')
-    if (activate === 'news') {
-      buttons[0].classList.add('selected')
-      buttons[1].classList.remove('selected')
-      handleStories()
-    }
-    else {
-      buttons[1].classList.add('selected')
-      buttons[0].classList.remove('selected')
-    }
-  }
+  
 
 const makeActive = (activate) => {
   setCurrentButton(activate)
   handleActive(activate)
 }
 
-React.useEffect(() => {
-  handleActive(currentButton)
-}, [currentButton])
+
 
 const storiesReducer = (state, action) => {
   switch(action.type){
@@ -159,22 +146,47 @@ const storiesReducer = (state, action) => {
 
 const [stories, dispatchStories] = React.useReducer(
   storiesReducer,
-  { stories: '', isLoading: false }
+  { stories: '', isLoading: true }
 )
 
-const handleStories = async () => {
-  dispatchStories({ type: 'STORIES_INIT' })
-  const res = await axios.get(`https://newsapi.org/v2/everything?q=chess&pageSize=10&sortBy=popularity&language=ru&apiKey=${newsApi}`)
-  console.log(res.data)
-  dispatchStories({
-    type: 'STORIES_SUCCESS',
-    payload: {
-      stories: res.data
-    }
-    
-  })
+const handleStories = React.useCallback(async () => {
+  if (stories.stories === '') {
+    dispatchStories({ type: 'STORIES_INIT' })
+    const res = await axios.get(`https://newsapi.org/v2/everything?q=шахматы&pageSize=10&sortBy=popularity&language=ru&apiKey=${newsApi}`)
+    console.log(res.data)
+    dispatchStories({
+      type: 'STORIES_SUCCESS',
+      payload: {
+        stories: res.data
+      }
+      
+    })
+  }
+  else{
+    console.log('уже загружено', stories.stories)
+  }
+}, [stories.stories])
 
-}
+const handleActive = React.useCallback((activate) => {
+  const buttons = document.getElementsByClassName('slider')
+  if (activate === 'news') {
+    buttons[0].classList.add('selected')
+    buttons[1].classList.remove('selected')
+    handleStories()
+  }
+  else {
+    buttons[1].classList.add('selected')
+    buttons[0].classList.remove('selected')
+  }
+}, [handleStories])
+
+React.useEffect(() => {
+  handleStories()
+}, [handleStories])
+
+React.useEffect (() => {
+  handleActive(currentButton)
+}, [currentButton, handleActive])
 
   return (
     <div className='App'>
@@ -209,7 +221,34 @@ const handleStories = async () => {
       </div>
       {
         currentButton === 'news'
-        ? (<><p>новости)</p></>)
+        ? stories.isLoading
+        ? (<div className='news-cont'>грузим...</div>)
+        : (<div className='news-cont'>
+          {
+            Object.keys(stories.stories.articles).map(number => {
+              const title = stories.stories.articles[number].title
+              const date = stories.stories.articles[number].publishedAt
+              const source = stories.stories.articles[number].source.name
+              const url = stories.stories.articles[number].url
+              const picture = stories.stories.articles[number].urlToImage
+              return (
+                <div className='news-elem' key={number}>
+                  <p className='text'>
+                    <a href={url} target='_blank' rel="noreferrer">{title} </a> 
+                    <span>
+                      {date}
+                    </span> 
+                    <span>
+                      {source} 
+                    </span>
+                    <img style={{width: '20px', height: '20px'}} src={picture} alt='заглушка'></img>
+                  </p>
+
+                </div>
+              )
+            })
+          }
+        </div>)
         : (
           accountInfo === ''
           ? (<div style={{width: '96%', height: '80vh', padding: '20px 30px', paddingRight:'60px'}}>

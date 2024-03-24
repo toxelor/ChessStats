@@ -1,0 +1,138 @@
+html{
+  overflow: hidden; 
+}
+
+.App {
+  min-height: 100vh; 
+  min-width: 100vw;
+  height: auto; 
+  background: linear-gradient(to right, #ffba609e, #ead2b2);
+  background-repeat: repeat;
+  color: #171212; 
+}
+
+.nav-bar {
+  display: flex;
+  border-bottom: black 1px solid;
+  padding: 20px 30px;
+  height: 35px;
+  justify-content: space-between;
+}
+
+.text{
+  margin: 0;
+  font-size: 30px; 
+  color: black;
+  text-decoration: none;
+}
+
+.small-text{
+  font-size: 15px;
+  color: rgb(0, 0, 0);
+  opacity: 0.9;
+  margin: 0;
+}
+
+.a {
+  text-decoration: none;
+}
+.button {
+  border: black 1px solid;
+  background-color: transparent;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 5px 5px;
+}
+
+.navigation {
+  display: flex;
+  padding: 0 30px;
+  height: 25px;
+  justify-content: center;
+}
+
+.slider {
+  flex-grow: 1;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.slider:hover {
+  background-color: #00000019;
+  box-shadow: 0 2px 0px orange;
+}
+
+.selected {
+  background-color: #17121208;
+  box-shadow: 0 2px 0px orange;
+}
+
+.container{
+  padding: 9px 50px;
+  display: flex;
+  min-height: 579px;
+  justify-content: space-between;
+}
+
+.left-bar{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info-block{
+  margin-left: 10px;
+  display: inline-block;
+  width: 90%;
+  flex-grow: 1;
+  background-color: rgba(128, 128, 128, 0.115);
+  border: #171212 1px solid;
+  padding: 5px 10px;
+}
+
+.game-modes{
+  border: 1px solid black;
+  padding: 5px 5px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  transition: 200ms;
+}
+
+.game-text {
+  font-size: 40px;
+}
+
+.game-modes:hover{
+  background-color: #17121208;
+  box-shadow: 0 2px 0px orange;
+  transform: translate(-2px, -2px);
+}
+
+.game-modes:active{
+  transform: translate(0, 0);
+  box-shadow: 0 0px 0px orange;
+}
+
+.info-elem {
+  display: flex; 
+  margin: 9px 0;
+  justify-content: space-between;
+  border: #171212a8 1px solid;
+  padding: 3px 3px;
+  overflow: hidden; 
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
+
+.info-elem > span {
+  overflow: hidden; 
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
+
+.info-elem:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.159);
+  transform: translate(-1px, -1px);
+}

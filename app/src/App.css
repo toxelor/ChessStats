@@ -146,3 +146,32 @@
   overflow-y: scroll;
 }
 
+.news-cont::-webkit-scrollbar {
+  background-color: transparent;
+}
+
+.news-elem {
+  background-color: rgba(101, 92, 92, 0.237);
+  border-bottom: rgba(0, 0, 0, 0.658) 1px solid;
+  padding: 20px 50px;
+  transition: 200ms;
+}
+
+.news-elem:hover {
+  background-color: rgba(63, 59, 59, 0.237);
+}
+
+.img-div {
+  display: flex;
+  width: 100%;
+  max-height: 400px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.picture {
+  width: 55%;
+  height: 100%;
+  object-fit: fill;
+}
+

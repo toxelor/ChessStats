@@ -227,24 +227,31 @@ React.useEffect (() => {
           {
             Object.keys(stories.stories.articles).map(number => {
               const title = stories.stories.articles[number].title
-              const date = stories.stories.articles[number].publishedAt
-              const source = stories.stories.articles[number].source.name
+              const date = stories.stories.articles[number].publishedAt.slice(0, 10).replace('-', '.').replace('-', '.')
+              const source = stories.stories.articles[number].source.name + ' '
               const url = stories.stories.articles[number].url
               const picture = stories.stories.articles[number].urlToImage
               return (
-                <div className='news-elem' key={number}>
-                  <p className='text'>
-                    <a href={url} target='_blank' rel="noreferrer">{title} </a> 
-                    <span>
-                      {date}
-                    </span> 
-                    <span>
+                <a href={url} target='_blank' rel="noreferrer" style={{textDecoration: 'none'}}>
+                  <div className='news-elem' key={number}>
+                    <div className='img-div'>
+                      <img className='picture' src={picture} alt=''></img>
+                    </div>
+                    
+                    <p className='text'>
+                      {title}
+                      
+                    </p>
+                    <span className='small-text'>
                       {source} 
+                    </span> 
+                    <span className='small-text'>
+                      {date}
                     </span>
-                    <img style={{width: '20px', height: '20px'}} src={picture} alt='заглушка'></img>
-                  </p>
 
-                </div>
+                  </div>
+                </a>
+                
               )
             })
           }

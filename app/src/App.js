@@ -152,7 +152,7 @@ const [stories, dispatchStories] = React.useReducer(
 const handleStories = React.useCallback(async () => {
   if (stories.stories === '') {
     dispatchStories({ type: 'STORIES_INIT' })
-    const res = await axios.get(`https://newsapi.org/v2/everything?q=шахматы&pageSize=10&sortBy=popularity&language=ru&apiKey=${newsApi}`)
+    const res = await axios.get(`https://newsapi.org/v2/everything?q=шахматы&pageSize=10&sortBy=relevancy&language=ru&apiKey=${newsApi}`)
     console.log(res.data)
     dispatchStories({
       type: 'STORIES_SUCCESS',

@@ -223,7 +223,32 @@ React.useEffect (() => {
         currentButton === 'news'
         ? stories.isLoading
         ? (<div className='news-cont'>грузим...</div>)
-        : (<div className='news-cont'>
+        : <News stories={stories}/>
+        : (
+          accountInfo === ''
+          ? (<div style={{width: '96%', height: '80vh', padding: '20px 30px', paddingRight:'60px'}}>
+          <div style={{display: 'flex', alignItems: 'center', width: '100%', height: '100%', justifyContent: 'center', flexDirection: 'column', background: 'rgba(128, 128, 128, 0.115)'}}>
+          <p className='text' style={{textAlign: 'center'}}>Чтобы увидеть информацию об аккаунте, войдите в него</p>
+        </div>
+        </div>)
+          : (
+            <Account accountInfo={accountInfo} token={token} />
+          )
+        )
+
+        
+      }
+    </div>
+    
+  );
+
+  
+}
+
+const News = ({ stories }) => {
+  
+  return (
+(<div className='news-cont'>
           {
             Object.keys(stories.stories.articles).map(number => {
               const title = stories.stories.articles[number].title
@@ -233,7 +258,7 @@ React.useEffect (() => {
               const picture = stories.stories.articles[number].urlToImage
               return (
                 <a href={url} target='_blank' rel="noreferrer" style={{textDecoration: 'none'}}>
-                  <div className='news-elem' key={number}>
+                  <div className={`news-elem number${number}`} key={number}>
                     <div className='img-div'>
                       <img className='picture' src={picture} alt=''></img>
                     </div>
@@ -256,25 +281,7 @@ React.useEffect (() => {
             })
           }
         </div>)
-        : (
-          accountInfo === ''
-          ? (<div style={{width: '96%', height: '80vh', padding: '20px 30px', paddingRight:'60px'}}>
-          <div style={{display: 'flex', alignItems: 'center', width: '100%', height: '100%', justifyContent: 'center', flexDirection: 'column', background: 'rgba(128, 128, 128, 0.115)'}}>
-          <p className='text' style={{textAlign: 'center'}}>Чтобы увидеть информацию об аккаунте, войдите в него</p>
-        </div>
-        </div>)
-          : (
-            <Account accountInfo={accountInfo} token={token} />
-          )
-        )
-
-        
-      }
-    </div>
-    
-  );
-
-  
+  )
 }
 
 const Account = ({accountInfo, token}) => {

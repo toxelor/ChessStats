@@ -6,7 +6,7 @@ html{
   min-height: 100vh; 
   min-width: 100vw;
   height: auto; 
-  background: linear-gradient(to right, #ffba609e, #ead2b2);
+  background: rgb(255, 250, 237);
   background-repeat: repeat;
   color: #171212; 
 }
@@ -42,6 +42,7 @@ html{
   font-size: 15px;
   cursor: pointer;
   padding: 5px 5px;
+  border-radius: 5px;
 }
 
 .navigation {
@@ -90,6 +91,7 @@ html{
   background-color: rgba(128, 128, 128, 0.115);
   border: #171212 1px solid;
   padding: 5px 10px;
+  border-radius: 5px;
 }
 
 .game-modes{
@@ -98,6 +100,7 @@ html{
   margin-bottom: 3px;
   cursor: pointer;
   transition: 200ms;
+  border-radius: 5px;
 }
 
 .game-text {
@@ -123,7 +126,8 @@ html{
   padding: 3px 3px;
   overflow: hidden; 
   white-space: nowrap; 
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
+  border-radius: 5px;
 }
 
 .info-elem > span {
@@ -146,6 +150,7 @@ html{
   background-color: rgba(128, 128, 128, 0.115);
   flex-direction: column;
   overflow-y: scroll;
+  border-radius: 5px;
 }
 
 .news-cont::-webkit-scrollbar {
@@ -157,6 +162,13 @@ html{
   border-bottom: rgba(0, 0, 0, 0.658) 1px solid;
   padding: 20px 50px;
   transition: 200ms;
+  
+}
+
+.number0{
+  border-radius: 5px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 .news-elem:hover {
@@ -175,5 +187,6 @@ html{
   width: 55%;
   height: 100%;
   object-fit: fill;
+  border-radius: 5px;
 }
 

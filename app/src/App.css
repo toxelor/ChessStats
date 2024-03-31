@@ -43,6 +43,11 @@ html{
   cursor: pointer;
   padding: 5px 5px;
   border-radius: 5px;
+  transition: 200ms;
+}
+
+.button:hover {
+  background-color: rgba(128, 128, 128, 0.115);
 }
 
 .navigation {
@@ -58,6 +63,7 @@ html{
   border: none;
   border-radius: 0;
   cursor: pointer;
+  transition: 200ms;
 }
 
 .slider:hover {
@@ -128,6 +134,7 @@ html{
   white-space: nowrap; 
   text-overflow: ellipsis;
   border-radius: 5px;
+  transition: 200ms;
 }
 
 .info-elem > span {
